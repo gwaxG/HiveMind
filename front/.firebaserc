@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "hivemind-one": {
+      "hosting": {
+        "front": [
+          "hivemind-one"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "hivemind-one"
+  }
+}
