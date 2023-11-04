@@ -11,3 +11,10 @@ export interface PriceSerializer {
     date: string;
 }
 
+export interface TodayPriceSerializer {
+    id?: number;
+    symbol: any;
+    source: any;
+    price: number;
+}
+

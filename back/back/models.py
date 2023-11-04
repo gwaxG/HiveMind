@@ -29,13 +29,14 @@ class Symbol(models.Model):
 class Source(models.Model):
     name = models.CharField(max_length=30)
 
+class TodayPrice(models.Model):
+    symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE)
+    price = models.FloatField()
+
 class Price(models.Model):
     symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     price = models.FloatField()
     date = models.DateField()
 
-class TodayPrice(models.Model):
-    symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
-    source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    price=models.FloatField()
