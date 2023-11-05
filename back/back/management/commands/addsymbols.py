@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from back.models import Symbol, Source, SourcesEnum
+from back.models import Symbol, Source, SourceEnum
 
 SYMBOLS = [
     "BTCUSDT",
@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 Symbol.objects.create(name=symbol)
                 self.stdout.write(f"Added symbol {symbol}")
 
-        for source in dir(SourcesEnum):
+        for source in dir(SourceEnum):
             if not source.startswith('__') and not Source.objects.filter(name=source).exists():
                 Source.objects.create(name=source)
                 self.stdout.write(f"Added source {symbol}")

@@ -18,7 +18,7 @@ Table: data acquisition:
     c. market-based opinion | float
 """
 
-class SourcesEnum:
+class SourceEnum:
     Human = 'Human'
     Real = 'Real'
     Statistics = 'Statistics'

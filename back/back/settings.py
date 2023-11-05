@@ -10,9 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+# CUSTOM SETTINGS
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv 
+import logging
+import os
+
 load_dotenv(find_dotenv())
+
+if os.environ.get("DJANGO_ENV") == 'dev':
+    logging.basicConfig(level=logging.INFO)
+else:
+    logging.basicConfig(filename='/var/log/syslog/hivemind.log', level=logging.INFO)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

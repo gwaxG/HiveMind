@@ -1,6 +1,6 @@
 from binance.client import Client
 from django.core.management.base import BaseCommand
-from back.models import Symbol, Source, SourcesEnum, Price
+from back.models import Symbol, Source, SourceEnum, Price
 from datetime import datetime, timedelta
 import os
 from back.consts import BACKDAYS
@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         client = Client(os.environ['BINANCEKEY'], os.environ['BINANCEKEY'])
         
-        source = Source.objects.filter(name=SourcesEnum.Real).first()
+        source = Source.objects.filter(name=SourceEnum.Real).first()
 
         now = datetime.utcnow().date()
         start = now - timedelta(days=BACKDAYS+1)
