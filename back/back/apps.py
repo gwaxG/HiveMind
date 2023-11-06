@@ -8,5 +8,5 @@ class BackConfig(AppConfig):
     name = 'back'
 
     def ready(self):
-        if os.environ.get('RUN_MAIN', None) != 'true':
+        if os.environ.get('RUN_MAIN', None) == 'true':
             Thread(target=Jobs().run).start()

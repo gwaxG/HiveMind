@@ -35,8 +35,10 @@ class Jobs:
                 # Close time of the last kline.
                 last_kline_price = self.client.get_historical_klines(symbol=symbol.name, interval="1m", limit=1)[0][4]
                 Price.objects.create(symbol=symbol, source=real_source, price=last_kline_price, date=today)
+                
+            TodayPrice.objects.all().delete()
+            logging.info(f"Day summary human: {human_mean}, statistics:{stats_mean}, real:{last_kline_price}.")
 
-                logging.info(f"Day summary human: {human_mean}, statistics:{stats_mean}, real:{last_kline_price}.")
 
         except Exception as e:
             logging.error(f"An error occurred: {e} while creating summary")
