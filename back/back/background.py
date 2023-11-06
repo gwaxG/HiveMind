@@ -5,8 +5,7 @@ import numpy as np
 import datetime
 from django.db import connection
 from apscheduler.schedulers.background import BackgroundScheduler
-from back.models import Symbol, Source, TodayPrice, Price, SourceEnum
-
+from django.utils import timezone
 
 class Jobs:
     def __init__(self):
@@ -14,6 +13,8 @@ class Jobs:
         self.client = Client(os.environ['BINANCEKEY'], os.environ['BINANCEKEY'])
     
     def summarize_work_day(self):
+        from back.models import Symbol, Source, TodayPrice, Price, SourceEnum
+
         today = datetime.datetime.utcnow().date()
         try:
             symbols = Symbol.objects.all()

@@ -20,6 +20,7 @@ load_dotenv(find_dotenv())
 
 if os.environ.get("DJANGO_ENV") == 'dev':
     logging.basicConfig(level=logging.INFO)
+# DJANGO_ENV is None usually in prod
 else:
     logging.basicConfig(filename='/var/log/syslog/hivemind.log', level=logging.INFO)
 
