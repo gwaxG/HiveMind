@@ -10,17 +10,21 @@ class Command(BaseCommand):
     help = 'Used to generate artificial prices'
 
     def handle(self, *args, **options):
-        while True:
-            stats_source = Source.objects.filter(name=SourceEnum.Statistics).first()
-            human_source = Source.objects.filter(name=SourceEnum.Human).first()
-            date = datetime.utcnow().date()
+        stats_source = Source.objects.filter(name=SourceEnum.Statistics).first()
+        human_source = Source.objects.filter(name=SourceEnum.Human).first()
+        real_source = Source.objects.filter(name=SourceEnum.Real).first()
 
-            for symbol in Symbol.objects.all():
-                prices = []
-                base_price = random.random() * 100
+        prices = []
+        now = datetime.utcnow().date()
 
-                for i in range(10):
-                    prices.append(Price(symbol=symbol, source=stats_source, price=base_price + random.random() * 10))
-                    prices.append(Price(symbol=symbol, source=human_source, price=base_price + random.random() * 10))
-                
-                TodayPrice.objects.bulk_create(prices)
+        for symbol in Symbol.objects.all():
+            
+            base_price = random.random() * 100
+
+            for i in range(30):
+                date = now - timedelta(days=i)
+                prices.append(Price(symbol=symbol, source=stats_source, price=base_price + random.random() * 10,date=date))
+                prices.append(Price(symbol=symbol, source=human_source, price=base_price + random.random() * 10,date=date))
+                prices.append(Price(symbol=symbol, source=real_source, price=base_price + random.random() * 10,date=date))
+            
+        Price.objects.bulk_create(prices)

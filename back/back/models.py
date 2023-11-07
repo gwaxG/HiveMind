@@ -1,23 +1,5 @@
 from django.db import models
 
-"""
-Table: Symbols:
-    a. Symbols
-
-Table: Historical prices:
-    a. Symbol
-    b. Mean human-based opinion | float
-    c. Market actual price from excahnge | float
-    d. Depth market-based deduced price | float
-    e. Date
-
-! Processing is triggered once a day mean value is calculated, tables cleaned, calculated data is written to historical prices.
-Table: data acquisition:
-    a. Symbol
-    b. human-based opinion | float
-    c. market-based opinion | float
-"""
-
 class SourceEnum:
     Human = 'Human'
     Real = 'Real'
@@ -28,6 +10,13 @@ class Symbol(models.Model):
 
     def __str__(self):
         return self.name
+
+class User(models.Model):
+    userid = models.CharField(max_length=30, primary_key=True)
+    lastvisit = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.userid}, last visited at {self.lastvisit}"
 
 class Source(models.Model):
     name = models.CharField(max_length=30)
@@ -48,6 +37,7 @@ class Price(models.Model):
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     price = models.FloatField()
     date = models.DateField()
+    
     def __str__(self):
         return f"{self.symbol}, {self.source}, {self.price}, {self.date}"
 
