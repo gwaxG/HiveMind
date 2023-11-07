@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClientService } from './services/http-client.service';
-import { StateManagerService } from './services/state-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +11,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClientService,
-    private manager: StateManagerService
   ) {
 
   }
 
   ngOnInit() {
-    const response = this.httpClient.initiliaze()
-    this.manager.symbols = response.symbols
-    this.manager.submitted = response.submittedToday
+    const response = this.httpClient.getSymbols()
+    
   }
 }

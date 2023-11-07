@@ -3,9 +3,9 @@
     <div class="row mt-4">
       <div class="col-12">
         <form (submit)="onSubmit()">
-          <div class="form-group" *ngFor="let coin of coinNames; let i = index">
-            <label>{{coin}}</label>
-            <input type="text" class="form-control" [(ngModel)]="coinPrices[i]" name="coinPrice-{{i}}">
+          <div class="form-group" *ngFor="let symbol of symbols; let i = index">
+            <label>{{symbol.name}}</label>
+            <input type="text" class="form-control" [(ngModel)]="prices[i]" name="coinPrice-{{i}}">
           </div>
           <button type="submit" class="btn btn-success">Submit</button>
         </form>

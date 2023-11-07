@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartType, ChartOptions } from 'chart.js';
-import { StateManagerService } from 'src/app/services/state-manager.service';
 
 class UpMeanDown {
   up: number[] = []
@@ -47,92 +46,10 @@ export class ChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.manager.submitted)
-    this.chartLabels = this.manager.statistics[this.symbol].labels
-    const stats = this.manager.statistics[this.symbol]
     
-    const ids = ["realup", "realmean", "realdown", "humanup", "humanmean", "humandown", "marketup", "marketmean", "marketdown"]
-    const datasets = [
-      this.data.real.up,  
-      this.data.real.mean,
-      this.data.real.down,
-      this.data.human.up,  
-      this.data.human.mean,
-      this.data.human.down,
-      this.data.market.up,  
-      this.data.market.mean,
-      this.data.market.down,
-    ]
-    
-    this.chartData = [
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realmean",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-      { 
-        label: "realup",
-        borderColor: 'red',
-        fill: false,
-        data: this.data.real.up, 
-        smooth: 0.4,
-      },
-    ]
   }
 
-  constructor(
-    private manager: StateManagerService) {
+  constructor() {
 
     this.symbol = ""
   }

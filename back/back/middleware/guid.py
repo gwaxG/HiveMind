@@ -19,7 +19,7 @@ class GuidMiddleware:
             user.save()
             return True
         except User.DoesNotExist:
-            logging.warning(f"User with id {userid} expected, but not found.")
+            logging.info(f"Need to create a new user, {userid} not found.")
             return False
 
     def create_user(self) -> str:
@@ -27,6 +27,7 @@ class GuidMiddleware:
         date = datetime.datetime.utcnow()
 
         User.objects.create(userid=userid, lastvisit =date)
+        logging.info(f"Created a new user {userid}.")
 
         return userid
 
