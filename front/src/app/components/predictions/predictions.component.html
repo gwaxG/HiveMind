@@ -2,6 +2,11 @@
 
     <div class="row mt-4">
       <div class="col-12">
+
+        <p *ngIf="submitted">Your predictions were succesfully sent.</p>
+        <p *ngIf="submissionError">Error during submission.</p>
+        <p *ngIf="statusError">Meet a trouble during page initialization.</p>
+
         <form (submit)="onSubmit()">
           <div class="form-group" *ngFor="let symbol of symbols; let i = index">
             <label>{{symbol.name}}</label>
@@ -12,4 +17,3 @@
       </div>
     </div>
 </div>
-  

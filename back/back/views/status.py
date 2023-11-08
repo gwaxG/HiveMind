@@ -12,8 +12,7 @@ from back.models import User
 class StatusView(APIView):
 
     def get(self, request, format=None):
-        userid = request.COOKIES["userid"]
-        user = User.objects.get(userid=userid)
+        user = User.objects.get(userid=request.userid)
         
         submitted = user.lastsubmission is not None and user.lastsubmission.date() == datetime.utcnow().date()
 

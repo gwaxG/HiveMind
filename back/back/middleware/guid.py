@@ -13,14 +13,9 @@ class GuidMiddleware:
         self.get_response = get_response
 
     def update_user(self, userid: str) -> bool:
-        try:
-            user = User.objects.get(userid=userid)
-            user.lastvisit = datetime.datetime.utcnow()
-            user.save()
-            return True
-        except User.DoesNotExist:
-            logging.info(f"Need to create a new user, {userid} not found.")
-            return False
+        user = User.objects.get(userid=userid)
+        user.lastvisit = datetime.datetime.utcnow()
+        user.save()
 
     def create_user(self) -> str:
         userid = str(uuid.uuid4())
@@ -32,17 +27,20 @@ class GuidMiddleware:
         return userid
 
     def __call__(self, request: HttpRequest):
-        updated = False
-        
+        userid = ""
+        cookie_attach = False
         if self.cookie_name in request.COOKIES:
-            cookie = request.COOKIES.get(self.cookie_name)
-            updated = self.update_user(cookie)
-            
+            userid = request.COOKIES.get(self.cookie_name)
+            self.update_user(userid)
+        else:
+            userid = self.create_user()
+            cookie_attach = True     
+        
+        request.userid = userid
+
         response = self.get_response(request)
 
-        if not updated:
-            userid = self.create_user()
-
+        if cookie_attach:
             response.set_cookie(
                 self.cookie_name,
                 userid,
@@ -52,4 +50,5 @@ class GuidMiddleware:
                 secure=False,  # cookie will be sent only over HTTPS if True
                 httponly=True  # cookie cannot be accessed by JS if True (recommended)
             )
+
         return response

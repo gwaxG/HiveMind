@@ -11,8 +11,9 @@ import { Router } from '@angular/router';
 export class PredictionsComponent implements OnInit, OnDestroy  {
   public symbols: SymbolSerializer[]
   public prices: number[]
-  private error?: string
-  private submitted: boolean
+  public statusError : boolean
+  public submissionError : boolean
+  public submitted: boolean
 
   constructor(
       private router: Router,
@@ -20,7 +21,8 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
     this.submitted = false
     this.symbols = []
     this.prices = []
-    this.error = undefined
+    this.submissionError = false
+    this.statusError = false
   }
 
   ngOnInit() {
@@ -31,7 +33,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
         this.router.navigate(['/history']);
       },
       (error) => {
-        this.error = "Error happened while initializing the application. Sad... "
+        this.statusError = true
       }
     );
 
@@ -41,7 +43,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
         this.prices = new Array<number>(this.symbols.length);
       },
       (error) => {
-        this.error = "Error happened while initializing the application. Sad... "
+        this.statusError = true
       }
     );
   }
@@ -63,10 +65,10 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
 
     this.http.postTodayPrices(todayPrices).subscribe(
       response => {
-        console.log('POST call successful value returned in body', response);
+        this.submitted = true
       },
       error => {
-        console.error('POST call in error', error);
+        this.submissionError = true
       },
       () => {
         console.log('The POST observable is now completed.');
