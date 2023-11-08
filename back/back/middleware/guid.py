@@ -6,7 +6,7 @@ import datetime
 import uuid
 
 class GuidMiddleware:
-    cookie_name = 'user_id'
+    cookie_name = 'userid'
     expiration = 10 * 365 * 24 * 60 * 60  # 10 years
 
     def __init__(self, get_response: Callable[[HttpRequest], HttpResponse]):

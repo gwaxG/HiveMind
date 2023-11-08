@@ -14,43 +14,12 @@ class UpMeanDown {
 })
 export class ChartComponent implements OnInit {
   @Input() symbol: string
-  sigma: number = 2
   
-  data: any = {
-    real: new UpMeanDown(),
-    human: new UpMeanDown(),
-    market: new UpMeanDown()    
-  }
-
-  public lineChartType: ChartType = "line";
-  public chartLabels: string[] = []
-  public chartData: any[] = []
-
-  public chartOptions: ChartOptions = {
-    scales: {
-      y: {
-        stacked: false
-      },
-      x: {
-        ticks: {
-            autoSkip: true,
-            maxTicksLimit: 5
-        }
-    }
-    },
-    elements: {
-      line: {
-        tension: 0.4
-      }
-    }
-  }
-
-  ngOnInit() {
+   ngOnInit() {
     
   }
 
   constructor() {
-
-    this.symbol = ""
+    this.symbol = "Kek"
   }
 }

@@ -50,19 +50,29 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'rest_framework',
     'drf_typescript_generator',
-    'back'
+    'back',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'back.middleware.guid.GuidMiddleware'
+    'back.middleware.guid.GuidMiddleware',
+    
 ]
+
+# If you know the domains that will be accessing your API, add them here
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200"
+]
+
+# CORS_ALLOW_ALL_ORIGINS = True  # Be careful with this in a production environment!
 
 ROOT_URLCONF = "back.urls"
 

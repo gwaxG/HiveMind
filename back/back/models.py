@@ -14,6 +14,7 @@ class Symbol(models.Model):
 class User(models.Model):
     userid = models.CharField(max_length=30, primary_key=True)
     lastvisit = models.DateTimeField()
+    lastsubmission = models.DateTimeField(null=True)
 
     def __str__(self):
         return f"{self.userid}, last visited at {self.lastvisit}"

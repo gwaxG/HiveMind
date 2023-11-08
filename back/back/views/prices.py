@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from back.models import Price, Symbol, TodayPrice
+from back.models import Price, Symbol, TodayPrice, User
 from back.consts import BACKDAYS
 from back.serializers import TodayPriceSerializer, PriceSerializer
 import io
@@ -21,6 +21,11 @@ class PricesView(APIView):
     
     def post(self, request, format="application/json"):
         serializer = TodayPriceSerializer(data=request.data)
+        userid = request.COOKIES["userid"]
+
+        user = User.objects.get(userid=userid)
+        user.lastsubmission = datetime.utcnow()
+        user.save()
 
         if serializer.is_valid():
             price = serializer.save()
