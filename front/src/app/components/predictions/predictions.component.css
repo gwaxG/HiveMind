@@ -1,0 +1,29 @@
+.success-message {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #006803;
+    background-color: #006803;
+    color: hsl(0, 0%, 0%);
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+.error-message {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid rgb(221, 180, 174);
+    background-color: rgb(221, 180, 174);
+    color: #000000;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.back {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid rgba(201, 186, 58, 0.5); /* semi-transparent border */
+    background-color: rgba(201, 186, 58, 0.5); /* semi-transparent background */
+    color: #000000;
+    border-radius: 5px;
+    font-weight: bold;
+}

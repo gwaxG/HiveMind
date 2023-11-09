@@ -29,8 +29,10 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
     this.http.getStatus().subscribe(
       (data) => {
         const status = data["submitted"]
-        this.submitted = status
-        this.router.navigate(['/history']);
+        if (status)  
+        {
+          this.router.navigate(['/history']);
+        }
       },
       (error) => {
         this.statusError = true
