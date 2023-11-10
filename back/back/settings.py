@@ -69,10 +69,21 @@ MIDDLEWARE = [
 
 # If you know the domains that will be accessing your API, add them here
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200"
+    "http://localhost:4200",
+    "http://localhost:8000"
 ]
+CORS_ALLOW_CREDENTIALS = True
+# For session cookies
+SESSION_COOKIE_DOMAIN = None  # Not setting a specific domain
+SESSION_COOKIE_SAMESITE = 'None'  # Set to 'None' for cross-origin cookies
+SESSION_COOKIE_SECURE = False  # Ensures the cookie is sent over HTTPS
 
-# CORS_ALLOW_ALL_ORIGINS = True  # Be careful with this in a production environment!
+# For CSRF cookies
+CSRF_COOKIE_DOMAIN = None
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = False
+
+#CORS_ALLOW_ALL_ORIGINS = True  # Be careful with this in a production environment!
 
 ROOT_URLCONF = "back.urls"
 

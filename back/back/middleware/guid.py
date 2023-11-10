@@ -27,6 +27,7 @@ class GuidMiddleware:
         return userid
 
     def __call__(self, request: HttpRequest):
+        print(request.get_raw_uri(), request.COOKIES)
         userid = ""
         cookie_attach = False
         if self.cookie_name in request.COOKIES:
@@ -41,14 +42,6 @@ class GuidMiddleware:
         response = self.get_response(request)
 
         if cookie_attach:
-            response.set_cookie(
-                self.cookie_name,
-                userid,
-                max_age=self.expiration,
-                path='/',  # cookie will be available for the whole site
-                domain=None,  # cookie available for the current domain
-                secure=False,  # cookie will be sent only over HTTPS if True
-                httponly=True  # cookie cannot be accessed by JS if True (recommended)
-            )
+            response.set_cookie(self.cookie_name, userid, domain=None, samesite='None', secure=False)
 
         return response

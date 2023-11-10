@@ -20,15 +20,20 @@ class PricesView(APIView):
         return Response(data=PriceSerializer(prices, many=True).data)
     
     def post(self, request, format="application/json"):
-        serializer = TodayPriceSerializer(data=request.data)
-        userid = request.COOKIES["userid"]
+        serialized = [TodayPriceSerializer(data=data) for data in request.data]
+        userid = request.userid
 
         user = User.objects.get(userid=userid)
         user.lastsubmission = datetime.utcnow()
         user.save()
 
-        if serializer.is_valid():
-            price = serializer.save()
+        valids = []
+        for serializer in serialized:
+            isvalid = serializer.is_valid()
+            valids.append(isvalid)
+            if isvalid:
+                serializer.save()
+        if all(valids):
             return Response(status=status.HTTP_201_CREATED)
-        
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

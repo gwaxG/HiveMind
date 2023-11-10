@@ -21,6 +21,7 @@ export class HistoryComponent implements OnInit {
     this.http.getStatus().subscribe(
       (data) => {
         const status = data["submitted"]
+        console.log(status, " history")
         if (!status)  
         {
           this.router.navigate(['/']);

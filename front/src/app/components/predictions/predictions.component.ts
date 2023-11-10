@@ -36,6 +36,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
       },
       (error) => {
         this.statusError = true
+        console.log(error)
       }
     );
 
@@ -46,6 +47,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
       },
       (error) => {
         this.statusError = true
+        console.log(error)
       }
     );
   }
@@ -57,7 +59,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
     const todayPrices: TodayPriceSerializer[] = []
     for(let key in this.prices) {
       const price = this.prices[key]
-      const symbol = this.symbols[key]
+      const symbol = this.symbols[key].name
       todayPrices.push({
         symbol: symbol,
         source: "Human",
@@ -67,7 +69,8 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
 
     this.http.postTodayPrices(todayPrices).subscribe(
       response => {
-        this.submitted = true
+        console.log("Received this after sending data", response)
+        this.router.navigate(['/history']);
       },
       error => {
         this.submissionError = true
