@@ -18,7 +18,7 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.getPrices().subscribe(
+    this.http.getPrices("BTCUSDT").subscribe(
       (prices) => {
         console.log("In history OK", prices)
       },

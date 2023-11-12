@@ -64,9 +64,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'back.middleware.guid.GuidMiddleware',
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",  
@@ -74,7 +78,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-#CORS_ALLOW_ALL_ORIGINS = True  # Be careful with this in a production environment!
+# CORS_ALLOW_ALL_ORIGINS = True  
 
 ROOT_URLCONF = "back.urls"
 

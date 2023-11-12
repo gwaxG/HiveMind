@@ -24,18 +24,6 @@ class PricesView(APIView):
     
     def post(self, request, format="application/json"):
         serialized = [TodayPriceSerializer(data=data) for data in request.data]
-        t = datetime.utcnow().isoformat()
-
-        userid = request.session.get("userid")
-        if userid is None:
-            userid = str(uuid.uuid4())
-            request.session.set_expiry(30*24*60*60)
-            request.session["userid"] = userid
-            User.objects.create(userid=userid, lastsubmission=t)
-        else:
-            user = User.objects.get(userid=userid)
-            user.lastsubmission = datetime.utcnow().isoformat()
-            user.save()
 
         valids = []
         for serializer in serialized:
@@ -43,7 +31,13 @@ class PricesView(APIView):
             valids.append(isvalid)
             if isvalid:
                 serializer.save()
+            
         if all(valids):
+            userid = request.session.get("userid")
+            user = User.objects.get(userid=userid)
+            user.lastsubmission = datetime.utcnow().isoformat()
+            user.save()
+            
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

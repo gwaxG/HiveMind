@@ -30,8 +30,9 @@ export class HttpClientService {
     return this.http.get<SymbolSerializer[]>(this.endpoints.symbols, {withCredentials: true});
   }
 
-  getPrices() : Observable<PriceSerializer[]> {
-    return this.http.get<PriceSerializer[]>(this.endpoints.prices, {withCredentials: true})
+  getPrices(symbol: string) : Observable<PriceSerializer[]> {
+    const url = this.endpoints.prices + "?symbol=" + symbol
+    return this.http.get<PriceSerializer[]>(url, {withCredentials: true})
   }
 
   postTodayPrices(data: TodayPriceSerializer[]) : Observable<any> {
