@@ -18,18 +18,17 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.getStatus().subscribe(
-      (data) => {
-        const status = data["submitted"]
-        console.log(status, " history")
-        if (!status)  
-        {
-          this.router.navigate(['/']);
-        }
+    this.http.getPrices().subscribe(
+      (prices) => {
+        console.log("In history OK", prices)
       },
-      (error) => {
+      (e) => {
+        if (e.error.error == "No user id.")
+        {
+          this.router.navigate(['']);
+        }
         this.statusError = true
       }
-    );
+    )
   }
 }

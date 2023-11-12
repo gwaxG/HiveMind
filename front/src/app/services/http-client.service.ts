@@ -4,17 +4,18 @@ import { environment } from '../../environments/environment';
 import { SymbolSerializer, PriceSerializer, TodayPriceSerializer } from '../contracts/contracts';
 import { Observable } from 'rxjs';
 
-const endpoints = {
-  status: environment.backend + "status/",
-  prices: environment.backend + "prices/",
-  symbols: environment.backend + "symbols/"
-}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpClientService {
   headers: any
+
+  public endpoints = {
+    prices: environment.backend + "prices/",
+    symbols: environment.backend + "symbols/"
+  }
 
   constructor(private http: HttpClient) {
     const headers = {
@@ -25,19 +26,15 @@ export class HttpClientService {
     }
   }
 
-  getStatus() : Observable<any> {
-    return this.http.get(endpoints.status)
-  }
-
   getSymbols(): Observable<SymbolSerializer[]> {
-    return this.http.get<SymbolSerializer[]>(endpoints.symbols, {withCredentials: true});
+    return this.http.get<SymbolSerializer[]>(this.endpoints.symbols, {withCredentials: true});
   }
 
   getPrices() : Observable<PriceSerializer[]> {
-    return this.http.get<PriceSerializer[]>(endpoints.prices, {withCredentials: true})
+    return this.http.get<PriceSerializer[]>(this.endpoints.prices, {withCredentials: true})
   }
 
   postTodayPrices(data: TodayPriceSerializer[]) : Observable<any> {
-    return this.http.post(endpoints.prices, data, {withCredentials: true})
+    return this.http.post(this.endpoints.prices, data, {withCredentials: true})
   }
 }

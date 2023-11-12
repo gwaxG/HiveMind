@@ -26,20 +26,6 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
   }
 
   ngOnInit() {
-    this.http.getStatus().subscribe(
-      (data) => {
-        const status = data["submitted"]
-        if (status)  
-        {
-          this.router.navigate(['/history']);
-        }
-      },
-      (error) => {
-        this.statusError = true
-        console.log(error)
-      }
-    );
-
     this.http.getSymbols().subscribe(
       (symbols) => {
         this.symbols = symbols
@@ -74,6 +60,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
       },
       error => {
         this.submissionError = true
+        console.log(error)
       },
       () => {
         console.log('The POST observable is now completed.');

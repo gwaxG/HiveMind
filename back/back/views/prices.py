@@ -1,31 +1,41 @@
 from datetime import datetime, timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from back.models import Price, Symbol, TodayPrice, User
+from back.models import Price, Symbol, User
 from back.consts import BACKDAYS
 from back.serializers import TodayPriceSerializer, PriceSerializer
-import io
-from rest_framework.parsers import JSONParser
 from rest_framework import status
+import uuid
 
 class PricesView(APIView):
 
     def get(self, request, format=None):
+        userid = request.session.get("userid")
+        if userid is None:
+            return Response(data={"error": "No user id."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
         symbol_name = request.query_params['symbol']
         symbol = Symbol.objects.filter(name=symbol_name).first()
         start = datetime.utcnow() - timedelta(days=BACKDAYS+1)
         end = datetime.utcnow() - timedelta(days=1)
-
+        
         prices = Price.objects.filter(date__range=(start.date(), end.date()), symbol=symbol)
         return Response(data=PriceSerializer(prices, many=True).data)
     
     def post(self, request, format="application/json"):
         serialized = [TodayPriceSerializer(data=data) for data in request.data]
-        userid = request.userid
+        t = datetime.utcnow().isoformat()
 
-        user = User.objects.get(userid=userid)
-        user.lastsubmission = datetime.utcnow()
-        user.save()
+        userid = request.session.get("userid")
+        if userid is None:
+            userid = str(uuid.uuid4())
+            request.session.set_expiry(30*24*60*60)
+            request.session["userid"] = userid
+            User.objects.create(userid=userid, lastsubmission=t)
+        else:
+            user = User.objects.get(userid=userid)
+            user.lastsubmission = datetime.utcnow().isoformat()
+            user.save()
 
         valids = []
         for serializer in serialized:
