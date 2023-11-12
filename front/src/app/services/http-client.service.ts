@@ -12,6 +12,9 @@ import { Observable } from 'rxjs';
 export class HttpClientService {
   headers: any
 
+  public symbols: SymbolSerializer[]
+  public prices:  PriceSerializer[]
+
   public endpoints = {
     prices: environment.backend + "prices/",
     symbols: environment.backend + "symbols/"
@@ -24,9 +27,12 @@ export class HttpClientService {
       'Access-Control-Allow-Headers': 'Content-Type',
       withCredentials: true
     }
+
+    this.prices = []
+    this.symbols = []
   }
 
-  getSymbols(): Observable<SymbolSerializer[]> {
+  getSymbols() {
     return this.http.get<SymbolSerializer[]>(this.endpoints.symbols, {withCredentials: true});
   }
 

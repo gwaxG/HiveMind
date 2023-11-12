@@ -25,17 +25,17 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
     this.statusError = false
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.http.getSymbols().subscribe(
       (symbols) => {
+        console.log("loaded")
         this.symbols = symbols
-        this.prices = new Array<number>(this.symbols.length);
       },
       (error) => {
-        this.statusError = true
-        console.log(error)
+        console.log("Can not load symbols.")
       }
     );
+    this.prices = new Array<number>(this.http.symbols.length);
   }
 
   ngOnDestroy() {

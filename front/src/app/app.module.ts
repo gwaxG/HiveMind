@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { PredictionsComponent } from './components/predictions/predictions.component';
 import { KeyvaluePipe } from './pipes/keyvalue.pipe';
 import { HistoryComponent } from './components/history/history.component';
-import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { ChartComponent } from './components/chart/chart.component';
     KeyvaluePipe,
     HistoryComponent,
     PredictionsComponent,
-    ChartComponent
   ],
   imports: [
     BrowserModule,

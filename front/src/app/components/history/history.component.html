@@ -1,2 +1,31 @@
-<p>history works!</p>
-<app-chart></app-chart>
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="dropdown show">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown link
+                </a>
+              // TODO
+
+
+              <div class="dropdown-menu" *ngFor="let symbol of symbols; let i = index" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" (click)="fetchSymbolData(symbol.name)" href="#">{{symbol.name}}</a>
+            </div>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+    </div>
+</div>
+

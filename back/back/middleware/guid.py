@@ -15,9 +15,12 @@ class GuidMiddleware:
         userid = request.session.get("userid")
         if userid is None:
             userid = str(uuid.uuid4())
+            logging.info(f"New user visit {userid}.")
             request.session.set_expiry(30*24*60*60)
             request.session["userid"] = userid
             User.objects.create(userid=userid)
+        else:
+            logging.info(f"Existing user visit {userid}.")
             
         response = self.get_response(request)
         return response
