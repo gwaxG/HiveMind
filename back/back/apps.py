@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from django.core.signals import request_finished
 from threading import Thread
 import os 
 from back.background import Jobs

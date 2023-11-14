@@ -13,6 +13,7 @@ export class HistoryComponent implements OnInit {
   public statusError : boolean
   public prices: PriceSerializer[]
   public symbols: SymbolSerializer[]
+  public currentSymbol = "BTCUSDT"
 
   constructor(
     private router: Router,
@@ -23,6 +24,7 @@ export class HistoryComponent implements OnInit {
   }
 
   fetchSymbolData(symbol: string) {
+    this.currentSymbol = symbol
     this.http.getPrices(symbol).subscribe(
       (prices) => {
         this.prices = prices
