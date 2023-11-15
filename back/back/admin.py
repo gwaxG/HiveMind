@@ -1,5 +1,5 @@
 from django.contrib import admin
-from back.models import Symbol, Price
+from back.models import Symbol, Price, OHLC
 
 @admin.register(Symbol)
 class SymbolAdmin(admin.ModelAdmin):
@@ -9,3 +9,7 @@ class SymbolAdmin(admin.ModelAdmin):
 @admin.register(Price)
 class PriceAdmin(admin.ModelAdmin):
     list_display = ['symbol', 'source', 'price', 'date']
+
+@admin.register(OHLC)
+class PriceAdmin(admin.ModelAdmin):
+    list_display = ['symbol', 'source', 'date', 'high', 'low', 'open', 'close']

@@ -30,12 +30,12 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
       (symbols) => {
         console.log("loaded")
         this.symbols = symbols
+        this.prices = new Array<number>(symbols.length);
       },
       (error) => {
         console.log("Can not load symbols.")
       }
     );
-    this.prices = new Array<number>(this.http.symbols.length);
   }
 
   ngOnDestroy() {
@@ -49,7 +49,8 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
       todayPrices.push({
         symbol: symbol,
         source: "Human",
-        price: price
+        price: price,
+        date: "" // initialized on backend
       })
     }
 

@@ -1,6 +1,6 @@
 import datetime
 from rest_framework import serializers
-from back.models import Symbol, Price, Source
+from back.models import Symbol, Price, Source, OHLC
 from django_typomatic import ts_interface
 from django_typomatic import ts_interface, generate_ts
 
@@ -34,6 +34,24 @@ class PriceSerializer(serializers.ModelSerializer):
         model = Price
         fields = '__all__'
 
+@ts_interface()
+class OHLCSerializer(serializers.ModelSerializer):
+    
+    symbol = serializers.SlugRelatedField(
+        many=False,
+        queryset=Symbol.objects.all(),
+        slug_field='name'
+    )
+
+    source = serializers.SlugRelatedField(
+        many=False,
+        queryset=Source.objects.all(),
+        slug_field='name'
+    )
+
+    class Meta:
+        model = OHLC
+        fields = '__all__'
 
 def make_contracts():
     generate_ts('./../front/src/app/contracts/contracts.ts', camelize=True)

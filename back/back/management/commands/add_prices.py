@@ -1,6 +1,6 @@
 import time
 from django.core.management.base import BaseCommand
-from back.models import Symbol, Source, SourceEnum, Price
+from back.models import Symbol, Source, SourceEnum, OHLC
 import random
 from datetime import datetime, timedelta
 import os
@@ -22,7 +22,15 @@ class Command(BaseCommand):
 
             for i in range(30):
                 date = now - timedelta(days=i)
-                prices.append(Price(symbol=symbol, source=human_source, price=base_price + random.random() * 10,date=date))
-                prices.append(Price(symbol=symbol, source=real_source, price=base_price + random.random() * 10,date=date))
+                prices.append(OHLC(symbol=symbol, source=human_source, date=date,
+                                   high=base_price + random.random() * 10,
+                                   low=base_price + random.random() * 10,
+                                   open=base_price + random.random() * 10,
+                                   close=base_price + random.random() * 10))
+                prices.append(OHLC(symbol=symbol, source=real_source, date=date,
+                                   high=base_price + random.random() * 5,
+                                   low=base_price + random.random() * 5,
+                                   open=base_price + random.random() * 5,
+                                   close=base_price + random.random() * 5))
             
-        Price.objects.bulk_create(prices)
+        OHLC.objects.bulk_create(prices)

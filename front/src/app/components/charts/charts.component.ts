@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { PriceSerializer } from 'src/app/contracts/contracts';
+import { OHLCSerializer } from 'src/app/contracts/contracts';
 
 import {
   ChartComponent,
@@ -24,7 +24,7 @@ export type ChartOptions = {
   styleUrls: ['./charts.component.css']
 })
 export class ChartsComponent {
-  @Input() prices!: PriceSerializer[]
+  @Input() prices!: OHLCSerializer[]
   @ViewChild("chart") chart?: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
