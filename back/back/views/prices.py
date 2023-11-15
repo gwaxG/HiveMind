@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from back.models import Price, Symbol, User
 from back.consts import BACKDAYS
-from back.serializers import TodayPriceSerializer, PriceSerializer
+from back.serializers import PriceSerializer
 from rest_framework import status
 import uuid
 
@@ -23,14 +23,15 @@ class PricesView(APIView):
         return Response(data=PriceSerializer(prices, many=True).data)
     
     def post(self, request, format="application/json"):
-        serialized = [TodayPriceSerializer(data=data) for data in request.data]
+        serialized = [PriceSerializer(data=data) for data in request.data]
 
         valids = []
         for serializer in serialized:
-            isvalid = serializer.is_valid()
-            valids.append(isvalid)
-            if isvalid:
+            if serializer.is_valid():
                 serializer.save()
+                valids.append(True)
+            else:
+                valids.append(False)
             
         if all(valids):
             userid = request.session.get("userid")

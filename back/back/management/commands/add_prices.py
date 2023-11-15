@@ -1,6 +1,6 @@
 import time
 from django.core.management.base import BaseCommand
-from back.models import Symbol, Source, SourceEnum, Price, TodayPrice
+from back.models import Symbol, Source, SourceEnum, Price
 import random
 from datetime import datetime, timedelta
 import os
@@ -10,7 +10,6 @@ class Command(BaseCommand):
     help = 'Used to generate artificial prices'
 
     def handle(self, *args, **options):
-        stats_source = Source.objects.filter(name=SourceEnum.Statistics).first()
         human_source = Source.objects.filter(name=SourceEnum.Human).first()
         real_source = Source.objects.filter(name=SourceEnum.Real).first()
 
@@ -23,7 +22,6 @@ class Command(BaseCommand):
 
             for i in range(30):
                 date = now - timedelta(days=i)
-                prices.append(Price(symbol=symbol, source=stats_source, price=base_price + random.random() * 10,date=date))
                 prices.append(Price(symbol=symbol, source=human_source, price=base_price + random.random() * 10,date=date))
                 prices.append(Price(symbol=symbol, source=real_source, price=base_price + random.random() * 10,date=date))
             

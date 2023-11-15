@@ -3,7 +3,6 @@ from django.db import models
 class SourceEnum:
     Human = 'Human'
     Real = 'Real'
-    Statistics = 'Statistics'
 
 class Symbol(models.Model):
     name = models.CharField(max_length=30)
@@ -23,14 +22,6 @@ class Source(models.Model):
 
     def __str__(self):
         return self.name
-
-class TodayPrice(models.Model):
-    symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
-    source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    price = models.FloatField()
-
-    def __str__(self):
-        return f"{self.symbol}, {self.source}, {self.price}"
 
 class Price(models.Model):
     symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)

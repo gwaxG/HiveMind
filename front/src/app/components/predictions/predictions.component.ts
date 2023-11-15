@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClientService } from '../../services/http-client.service';
-import { SymbolSerializer, PriceSerializer, TodayPriceSerializer } from '../../contracts/contracts';
+import { SymbolSerializer, PriceSerializer} from '../../contracts/contracts';
 import { Router } from '@angular/router';
 
 @Component({
@@ -42,7 +42,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
   }
 
   onSubmit() {
-    const todayPrices: TodayPriceSerializer[] = []
+    const todayPrices: PriceSerializer[] = []
     for(let key in this.prices) {
       const price = this.prices[key]
       const symbol = this.symbols[key].name

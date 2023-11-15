@@ -8,13 +8,5 @@ export interface PriceSerializer {
     symbol: any;
     source: any;
     price: number;
-    date: string;
+    date?: string;
 }
-
-export interface TodayPriceSerializer {
-    id?: number;
-    symbol: any;
-    source: any;
-    price: number;
-}
-

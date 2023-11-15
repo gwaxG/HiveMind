@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { SymbolSerializer, PriceSerializer, TodayPriceSerializer } from '../contracts/contracts';
+import { SymbolSerializer, PriceSerializer } from '../contracts/contracts';
 import { Observable } from 'rxjs';
 
 
@@ -41,7 +41,7 @@ export class HttpClientService {
     return this.http.get<PriceSerializer[]>(url, {withCredentials: true})
   }
 
-  postTodayPrices(data: TodayPriceSerializer[]) : Observable<any> {
+  postTodayPrices(data: PriceSerializer[]) : Observable<any> {
     return this.http.post(this.endpoints.prices, data, {withCredentials: true})
   }
 }
