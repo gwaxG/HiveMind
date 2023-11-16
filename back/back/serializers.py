@@ -9,7 +9,7 @@ class SymbolSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Symbol
-        fields = '__all__'
+        fields = ['name']
 
 @ts_interface()
 class PriceSerializer(serializers.ModelSerializer):
@@ -20,6 +20,8 @@ class PriceSerializer(serializers.ModelSerializer):
         slug_field='name'
     )
 
+    price = serializers.FloatField()
+
     source = serializers.SlugRelatedField(
         many=False,
         queryset=Source.objects.all(),
@@ -27,12 +29,12 @@ class PriceSerializer(serializers.ModelSerializer):
     )
 
     def create(self, validated_data):
-        validated_data['date'] = datetime.datetime.utcnow()
-        return super().create(validated_data)
+        validated_data["date"] = datetime.datetime.utcnow().date()
+        return Price.objects.create(**validated_data)
 
     class Meta:
         model = Price
-        fields = '__all__'
+        fields = ['symbol', 'source', 'price']
 
 @ts_interface()
 class OHLCSerializer(serializers.ModelSerializer):
@@ -51,7 +53,7 @@ class OHLCSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OHLC
-        fields = '__all__'
+        fields = ['symbol', 'source', 'date', 'open', 'high', 'low', 'close']
 
 def make_contracts():
     generate_ts('./../front/src/app/contracts/contracts.ts', camelize=True)

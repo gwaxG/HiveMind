@@ -1,20 +1,16 @@
-export interface SymbolSerializer {
-    id?: number;
+export interface Symbol {
     name: string;
 }
 
-export interface PriceSerializer {
-    id?: number;
-    symbol: any;
-    source: any;
+export interface Price {
+    symbol: string;
+    source: string;
     price: number;
-    date: string;
 }
 
-export interface OHLCSerializer {
-    id?: number;
-    symbol: any;
-    source: any;
+export interface OHLC {
+    symbol: string;
+    source: string;
     date: string;
     open: number;
     high: number;

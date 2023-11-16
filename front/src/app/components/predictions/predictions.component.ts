@@ -41,16 +41,21 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
   ngOnDestroy() {
   }
 
+  formatDate(date: Date): string {
+    return [date.getFullYear(), date.getMonth(), date.getDate()].join('-')
+  }
+
   onSubmit() {
     const todayPrices: PriceSerializer[] = []
     for(let key in this.prices) {
       const price = this.prices[key]
       const symbol = this.symbols[key].name
+
       todayPrices.push({
         symbol: symbol,
         source: "Human",
         price: price,
-        date: "" // initialized on backend
+        date: this.formatDate(new Date())
       })
     }
 
