@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClientService } from '../../services/http-client.service';
-import { SymbolSerializer, PriceSerializer} from '../../contracts/contracts';
+import { Symbol, Price} from '../../contracts/contracts';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./predictions.component.css']
 })
 export class PredictionsComponent implements OnInit, OnDestroy  {
-  public symbols: SymbolSerializer[]
+  public symbols: Symbol[]
   public prices: number[]
   public statusError : boolean
   public submissionError : boolean
@@ -46,20 +46,19 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
   }
 
   onSubmit() {
-    const todayPrices: PriceSerializer[] = []
+    const prices: Price[] = []
     for(let key in this.prices) {
       const price = this.prices[key]
       const symbol = this.symbols[key].name
 
-      todayPrices.push({
+      prices.push({
         symbol: symbol,
         source: "Human",
         price: price,
-        date: this.formatDate(new Date())
       })
     }
-
-    this.http.postTodayPrices(todayPrices).subscribe(
+    console.log("prices", prices)
+    this.http.postTodayPrices(prices).subscribe(
       response => {
         console.log("Received this after sending data", response)
         this.router.navigate(['/history']);

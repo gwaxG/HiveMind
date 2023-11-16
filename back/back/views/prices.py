@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from back.models import Price, Symbol, User, OHLC
+from back.models import Price, Symbol, Source, User, OHLC
 from back.consts import BACKDAYS
 from back.serializers import PriceSerializer, OHLCSerializer
 from rest_framework import status
@@ -25,7 +25,7 @@ class PricesView(APIView):
     def update_ohlc(self, data: dict):
         date = datetime.utcnow().date()
         symbol = Symbol.objects.filter(name=data["symbol"]).first()
-        source = Symbol.objects.filter(name=data["source"]).first()
+        source = Source.objects.filter(name=data["source"]).first()
         price = data["price"]
 
         filtered = OHLC.objects.filter(date=date, symbol=symbol, source=source)

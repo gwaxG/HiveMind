@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OHLCSerializer, PriceSerializer, SymbolSerializer } from 'src/app/contracts/contracts';
+import { OHLC, Price, Symbol } from 'src/app/contracts/contracts';
 import { HttpClientService } from 'src/app/services/http-client.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { HttpClientService } from 'src/app/services/http-client.service';
 
 export class HistoryComponent implements OnInit {
   public statusError : boolean
-  public prices: OHLCSerializer[]
-  public symbols: SymbolSerializer[]
+  public prices: OHLC[]
+  public symbols: Symbol[]
   public currentSymbol = "BTCUSDT"
 
   constructor(
