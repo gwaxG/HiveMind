@@ -36,6 +36,7 @@ export class HistoryComponent implements OnInit {
           this.router.navigate(['']);
         }
         this.statusError = true
+        console.log("Error in fetching symbol data", e)
       }
     )
   }

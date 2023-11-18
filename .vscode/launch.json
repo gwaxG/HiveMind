@@ -2,15 +2,32 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "Launch Firefox",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}/front",
+            "sourceMapPathOverrides": {
+                "webpack:///*": "${webRoot}/front/src/app/*"
+              }
+        },
+        {
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\back\\manage.py",
+            "program": "${workspaceFolder}/back/manage.py",
             "args": [
                 "runserver"
             ],
             "django": true,
             "justMyCode": true
         },
+    ],
+    "compounds": [
+        {
+            "name": "Full-Stack Debug (Angular + Python)",
+            "configurations": ["Python: Django", "Launch Firefox"]
+        }
     ]
 }

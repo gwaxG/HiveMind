@@ -20,12 +20,7 @@ export type ChartOptions = {
 
 type OHLCPoint = {
   x: Date;
-  y: {
-    open: number;
-    high: number;
-    low: number;
-    close: number;
-  }
+  y: number[]
 }
 
 @Component({
@@ -49,16 +44,13 @@ export class ChartsComponent {
     {
       const pnt: OHLCPoint = {
         x: new Date(price.date),
-        y: {
-          open: price.open,
-          high: price.high,
-          close: price.close,
-          low: price.low,
-        }
+        y: [price.open, price.high, price.close, price.low,]
       }
-      console.log("point", pnt.x)
+      
       if (price.source == "Human") {
         this.seriesHuman.push(pnt)
+      } else {
+        this.seriesReal.push(pnt)
       }
     }
 
@@ -66,29 +58,11 @@ export class ChartsComponent {
       series: [
         {
           name: "Real OHLC prices",
-          data: [
-            {
-              x: new Date(1538778600000),
-              y: [6629.81, 6650.5, 6623.04, 6633.33]
-            },
-            {
-              x: new Date(1538780400000),
-              y: [6632.01, 6643.59, 6620, 6630.11]
-            }
-          ]
+          data: this.seriesReal
         },
         {
           name: "Predicted OHLC prices",
-          data: [
-            {
-              x: new Date(1538778600000),
-              y: [6629.81, 6650.5, 6623.04, 6633.33]
-            },
-            {
-              x: new Date(1538780400000),
-              y: [6632.01, 6643.59, 6620, 6630.11]
-            }
-          ]
+          data: this.seriesHuman
         }
       ],
       chart: {
@@ -96,7 +70,7 @@ export class ChartsComponent {
         width: '100%'
       },
       title: {
-        text: "Per day history",
+        text: "Daily history",
         align: "left"
       },
       xaxis: {

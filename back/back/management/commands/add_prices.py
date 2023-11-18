@@ -34,3 +34,4 @@ class Command(BaseCommand):
                                    close=base_price + random.random() * 5))
             
         OHLC.objects.bulk_create(prices)
+        print("Done!")

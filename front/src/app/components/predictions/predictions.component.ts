@@ -28,7 +28,6 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
   async ngOnInit() {
     this.http.getSymbols().subscribe(
       (symbols) => {
-        console.log("loaded")
         this.symbols = symbols
         this.prices = new Array<number>(symbols.length);
       },
@@ -57,7 +56,7 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
         price: price,
       })
     }
-    console.log("prices", prices)
+
     this.http.postTodayPrices(prices).subscribe(
       response => {
         console.log("Received this after sending data", response)
@@ -68,7 +67,6 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
         console.log(error)
       },
       () => {
-        console.log('The POST observable is now completed.');
       }
     );
   }
