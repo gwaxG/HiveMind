@@ -15,9 +15,9 @@ import { ChartsComponent } from './components/charts/charts.component';
   declarations: [
     AppComponent,
     KeyvaluePipe,
-    HistoryComponent,
     PredictionsComponent,
-    ChartsComponent
+    ChartsComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

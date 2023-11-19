@@ -28,17 +28,20 @@ type OHLCPoint = {
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css']
 })
-export class ChartsComponent {
-  @Input() prices!: OHLC[]
-  @ViewChild("chart") chart?: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  public  seriesHuman: OHLCPoint[]
-  public seriesReal: OHLCPoint[]
+export class ChartsComponent implements OnInit {
+  @ViewChild("chart") chart?: ChartComponent
 
-  constructor()
-  {
+  @Input() prices!: OHLC[]
+  public chartOptions!: Partial<ChartOptions>
+  public  seriesHuman!: OHLCPoint[]
+  public seriesReal!: OHLCPoint[]
+
+  constructor() {}
+
+  ngOnInit() {
     this.seriesHuman = []
     this.seriesReal = []
+    console.log("Constructing charts", this.prices)
 
     for  (const price of this.prices )
     {
