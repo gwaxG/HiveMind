@@ -41,23 +41,16 @@ class PricesView(APIView):
             f.save()
 
     def post(self, request, format="application/json"):
-        serialized = [PriceSerializer(data=data) for data in request.data]
+        serializer = PriceSerializer(data=request.data)
 
-        valids = []
-        for serializer in serialized:
-            if serializer.is_valid():
-                self.update_ohlc(serializer.validated_data)
-                serializer.save()
-                valids.append(True)
-            else:
-                valids.append(False)
-            
-        if all(valids):
+        if serializer.is_valid():
+            self.update_ohlc(serializer.validated_data)
+            serializer.save()
             userid = request.session.get("userid")
             user = User.objects.get(userid=userid)
             user.lastsubmission = datetime.utcnow().isoformat()
             user.save()
-
+            print("Prediction saved!")
             return Response(status=status.HTTP_201_CREATED)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+             return Response(status=status.HTTP_400_BAD_REQUEST)

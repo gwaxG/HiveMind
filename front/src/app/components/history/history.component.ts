@@ -18,13 +18,16 @@ export class HistoryComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClientService) {
+      console.log("constructing")
       this.statusError = false
       this.prices = []
       this.symbols = []
+      console.log("End constructing")
   }
 
   fetchSymbolData(symbol: string) {
     this.currentSymbol = symbol
+    console.log("fetching data for symbol", symbol)
     this.http.getPrices(symbol).subscribe(
       (prices) => {
         this.prices = prices
@@ -33,6 +36,7 @@ export class HistoryComponent implements OnInit {
       (e) => {
         if (e.error.error == "No user id.")
         {
+          console.log("no user id")
           this.router.navigate(['']);
         }
         this.statusError = true
@@ -42,6 +46,7 @@ export class HistoryComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("init")
     this.http.getSymbols().subscribe(
       (symbols) => {
         console.log("Symbols ok")
@@ -51,7 +56,7 @@ export class HistoryComponent implements OnInit {
         console.log("Can not load symbols.")
       }
     );
-    
+    console.log("fetching")
     this.fetchSymbolData("BTCUSDT")
   }
 }

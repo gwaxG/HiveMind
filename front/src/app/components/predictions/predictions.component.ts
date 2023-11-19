@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 })
 export class PredictionsComponent implements OnInit, OnDestroy  {
   public symbols: Symbol[]
-  public prices: number[]
+  public currentSymbol: number
+  public price: number
   public statusError : boolean
   public submissionError : boolean
   public submitted: boolean
@@ -20,21 +21,25 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
       private http: HttpClientService) {
     this.submitted = false
     this.symbols = []
-    this.prices = []
+    this.price = 0.0
     this.submissionError = false
     this.statusError = false
+    this.currentSymbol = 0
   }
 
   async ngOnInit() {
     this.http.getSymbols().subscribe(
       (symbols) => {
         this.symbols = symbols
-        this.prices = new Array<number>(symbols.length);
       },
       (error) => {
         console.log("Can not load symbols.")
       }
     );
+  }
+
+  setCurrent(index: number) {
+    this.currentSymbol = index
   }
 
   ngOnDestroy() {
@@ -44,22 +49,15 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
     return [date.getFullYear(), date.getMonth(), date.getDate()].join('-')
   }
 
-  onSubmit() {
-    const prices: Price[] = []
-    for(let key in this.prices) {
-      const price = this.prices[key]
-      const symbol = this.symbols[key].name
-
-      prices.push({
-        symbol: symbol,
-        source: "Human",
-        price: price,
-      })
+  onSubmit(index: number) {
+    const price: Price = {
+      symbol: this.symbols[index].name,
+      source: "Human",
+      price: this.price,
     }
 
-    this.http.postTodayPrices(prices).subscribe(
+    this.http.postTodayPrice(price).subscribe(
       response => {
-        console.log("Received this after sending data", response)
         this.router.navigate(['/history']);
       },
       error => {

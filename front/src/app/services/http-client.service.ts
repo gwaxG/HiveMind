@@ -28,7 +28,7 @@ export class HttpClientService {
     return this.http.get<OHLC[]>(url, {withCredentials: true})
   }
 
-  postTodayPrices(data: Price[]) : Observable<any> {
+  postTodayPrice(data: Price) : Observable<any> {
     return this.http.post(this.endpoints.prices, data, {withCredentials: true})
   }
 }
