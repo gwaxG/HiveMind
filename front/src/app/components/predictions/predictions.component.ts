@@ -33,7 +33,6 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
         this.symbols = symbols
       },
       (error) => {
-        console.log("Can not load symbols.")
       }
     );
   }

@@ -24,31 +24,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if os.environ.get("DJANGO_ENV") == 'dev':
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
-
-    # Database
-    # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-
     logging.basicConfig(level=logging.INFO)
 # DJANGO_ENV is None in prod
 else:
     DEBUG = False
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "NAME": "HIVEMIND",
-            'USER': 'root',
-            'PASSWORD': 'root',
-            'HOST': 'localhost',
-            'PORT': '3306',
-        }
-    }
     logging.basicConfig(filename='/var/log/syslog/hivemind.log', level=logging.INFO)
+
+
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/

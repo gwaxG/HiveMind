@@ -3,8 +3,6 @@ from django.core.management.base import BaseCommand
 from back.models import Symbol, Source, SourceEnum, OHLC
 import random
 from datetime import datetime, timedelta
-import os
-from back.consts import BACKDAYS
 
 class Command(BaseCommand):
     help = 'Used to generate artificial prices'
@@ -20,7 +18,7 @@ class Command(BaseCommand):
             
             base_price = 37500
 
-            for i in range(30):
+            for i in range(5):
                 date = now - timedelta(days=i)
                 prices.append(OHLC(symbol=symbol, source=human_source, date=date,
                                    high=base_price + random.random() * 5000,
