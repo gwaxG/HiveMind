@@ -5,6 +5,13 @@ reapare_server:
 	sudo apt update
 	sudo apt install nginx
 
+	sudo apt install certbot python3-certbot-nginx
+	sudo certbot --nginx -d hivemind.solar -d hivemind.solar
+	// renew
+	// sudo certbot renew --dry-run
+	
+	
+
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 	source ~/.bashrc
 	nvm install 18
@@ -21,3 +28,4 @@ reapare_server:
 	python3 -m venv venv
 	source venv/bin/activate
 	pip install -r requirements.txt
+	
