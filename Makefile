@@ -9,8 +9,8 @@ reapare_server:
 	sudo certbot --nginx -d hivemind.solar -d hivemind.solar
 	// renew
 	// sudo certbot renew --dry-run
-	
-	
+	mv server.config /etc/nginx/sites-available/hivemind
+	sudo ln -s /etc/nginx/sites-available/hivemind /etc/nginx/sites-enabled/
 
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 	source ~/.bashrc
