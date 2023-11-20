@@ -11,7 +11,7 @@
         <h4>Loading data...</h4>
       </div>
 
-      <select class="form-select" style="margin-top: 10%; margin-bottom: 5%;">
+      <select class="form-select no-radius" style="margin-top: 10%; margin-bottom: 5%;">
         <option selected>Select a symbol</option>
         <option *ngFor="let symbol of symbols; let i = index" (click)="setCurrent(i)" value={{symbol.name}}>{{symbol.name}}</option>
       </select>
@@ -23,7 +23,7 @@
               <label>{{symbols[currentSymbol].name}}</label>
             </div>
             <div class="col">
-              <input type="text" class="form-control" [(ngModel)]="price" name="coinPrice-{{currentSymbol}}">
+              <input type="text" class="form-control no-radius" [(ngModel)]="price" name="coinPrice-{{currentSymbol}}">
             </div>
           </div>
         </div>

@@ -2,14 +2,15 @@ from datetime import datetime, timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from back.models import Price, Symbol, Source, User, OHLC
-from back.consts import BACKDAYS
+from back.consts import BACKDAYS, INTERVAL
 from back.serializers import PriceSerializer, OHLCSerializer
 from rest_framework import status
-import uuid
+from . import get_cache
 
 class PricesView(APIView):
-
     def get(self, request, format=None):
+        cache = get_cache()
+
         userid = request.session.get("userid")
         if userid is None:
             return Response(data={"error": "No user id."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -20,6 +21,8 @@ class PricesView(APIView):
         end = datetime.utcnow() - timedelta(days=1)
         
         prices = OHLC.objects.filter(date__range=(start.date(), end.date()), symbol=symbol)
+
+        prices = list(prices) + cache[symbol_name]
         return Response(data=OHLCSerializer(prices, many=True).data)
     
     def update_ohlc(self, data: dict):

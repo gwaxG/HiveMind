@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnChanges  } from '@angular/core';
 import { OHLC } from 'src/app/contracts/contracts';
 
 import {
@@ -28,26 +28,34 @@ type OHLCPoint = {
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css']
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnInit, OnChanges  {
   @ViewChild("chart") chart?: ChartComponent
 
   @Input() prices!: OHLC[]
   public chartOptions!: Partial<ChartOptions>
-  public  seriesHuman!: OHLCPoint[]
+  public seriesHuman!: OHLCPoint[]
   public seriesReal!: OHLCPoint[]
 
   constructor() {}
 
   ngOnInit() {
+    this.createChartOptions()
+  }
+
+  ngOnChanges() {
+    this.createChartOptions()
+  }
+
+  createChartOptions() {
     this.seriesHuman = []
     this.seriesReal = []
-    console.log("Constructing charts", this.prices)
+    const ti = (n: number) => parseFloat(n.toFixed(2))
 
     for  (const price of this.prices )
     {
       const pnt: OHLCPoint = {
         x: new Date(price.date),
-        y: [price.open, price.high, price.close, price.low,]
+        y: [ti(price.open), ti(price.high), ti(price.close), ti(price.low)]
       }
       
       if (price.source == "Human") {
@@ -70,7 +78,7 @@ export class ChartsComponent implements OnInit {
       ],
       chart: {
         type: "candlestick",
-        width: '100%'
+        width: '100%',
       },
       title: {
         text: "Daily history",
@@ -82,7 +90,7 @@ export class ChartsComponent implements OnInit {
       yaxis: {
         tooltip: {
         }
-      }
+      },
     };
   }
 

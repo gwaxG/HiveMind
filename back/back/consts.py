@@ -1,1 +1,2 @@
 BACKDAYS = 30
+INTERVAL = '1d'

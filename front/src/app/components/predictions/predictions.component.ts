@@ -62,7 +62,6 @@ export class PredictionsComponent implements OnInit, OnDestroy  {
       },
       error => {
         this.submissionError = true
-        console.log(error)
       },
       () => {
       }

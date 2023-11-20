@@ -1,5 +1,5 @@
 <div class="container wm">
-    <div class="row">
+    <div class="row" style="margin-bottom: 2%;">
         <div class="col-6 d-flex align-items-center justify-content-start">
           <div class="lbl">
             {{currentSymbol}}
@@ -15,10 +15,8 @@
         </div>
     </div>
     <div class="row">
-      <div class="col-2"></div>
-      <div class="col-8">
+      <div class="col-10">
         <div *ngIf="ohlc.length !== 0; else loadingPrices">
-            <p>Length is {{ohlc.length}}</p>
           <app-charts [prices]="ohlc"></app-charts>
         </div>
         <ng-template #loadingPrices>

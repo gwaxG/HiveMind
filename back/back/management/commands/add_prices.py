@@ -18,20 +18,15 @@ class Command(BaseCommand):
 
         for symbol in Symbol.objects.all():
             
-            base_price = random.random() * 100
+            base_price = 37500
 
             for i in range(30):
                 date = now - timedelta(days=i)
                 prices.append(OHLC(symbol=symbol, source=human_source, date=date,
-                                   high=base_price + random.random() * 10,
-                                   low=base_price + random.random() * 10,
-                                   open=base_price + random.random() * 10,
-                                   close=base_price + random.random() * 10))
-                prices.append(OHLC(symbol=symbol, source=real_source, date=date,
-                                   high=base_price + random.random() * 5,
-                                   low=base_price + random.random() * 5,
-                                   open=base_price + random.random() * 5,
-                                   close=base_price + random.random() * 5))
+                                   high=base_price + random.random() * 5000,
+                                   low=base_price + random.random() * 5000,
+                                   open=base_price + random.random() * 5000,
+                                   close=base_price + random.random() * 5000))
             
         OHLC.objects.bulk_create(prices)
         print("Done!")

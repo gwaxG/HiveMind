@@ -27,8 +27,8 @@ export class HistoryComponent implements OnInit {
     this.currentSymbol = symbol
     this.http.getPrices(symbol).subscribe(
       (ohlc) => {
-        console.log("received prices", ohlc)
         this.ohlc = ohlc
+        console.log(ohlc)
       },
       (e) => {
         if (e.error.error == "No user id.")
